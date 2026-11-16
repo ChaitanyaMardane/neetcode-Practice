@@ -1,0 +1,47 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+     int m = grid.length;
+        int n =grid[0].length;
+        boolean[][] isVisit= new boolean[grid.length][grid[0].length];
+       int cnt=0;
+       for( int i = 0; i< m;i++ ){
+        for(int j=0; j< n ;j++)
+           if(!isVisit[i][j] && grid[i][j]=='1'){
+               cnt++;
+            //   System.out.println(cnt);
+               bfs(i,j,isVisit,grid);
+           }
+       }
+       return cnt;
+    }
+      public static void bfs(int r,int c , boolean[][] isVisit,char[][] grid){
+        isVisit[r][c]=true;
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(r,c));
+        while(!q.isEmpty()){
+            int row=q.peek().first;
+            int col=q.peek().second;
+            q.remove();
+            for(int dr=-1;dr<=1;dr++){
+                 for(int dc=-1;dc<=1;dc++){
+                    int nrow=row+dr;
+                    int ncol=col+dc;
+                    if(nrow>=0 && nrow<grid.length&& ncol>=0&& ncol<grid[0].length
+                    && Math.abs(dr)!=Math.abs(dc) &&grid[nrow][ncol]=='1'&&  !isVisit[nrow][ncol]){
+                        isVisit[nrow][ncol]=true;
+                        q.add(new Pair(nrow,ncol));
+                    }
+                }
+            }
+        }
+
+    }
+    public static class Pair{
+        int first;
+        int second;
+        public Pair(int f,int s){
+            this.first=f;
+            this.second=s;
+        }
+    }
+}

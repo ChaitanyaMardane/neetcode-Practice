@@ -1,0 +1,41 @@
+
+class Solution {
+    public int minEatingSpeed(int[] arr, int h) {
+        int n = arr.length;
+       
+        int r=Integer.MIN_VALUE;
+        int l = 1 ;
+
+        for( int x : arr){
+            r=r<x?x:r;
+        }
+         if(h==n)return r;
+        
+       
+
+        int minhr=Integer.MAX_VALUE;
+        
+        while( l <= r){
+            int mid = l + ((r-l)/2);
+            int hr = 0;
+            for(int y : arr){
+                if(y%mid==0){
+                    hr+=y/mid;
+                }else{
+                    hr+=(y/mid) + 1;
+                }
+
+                if(hr> h ){
+                    l=mid+1;
+                    break;
+                }
+            }
+            if(hr<=h){
+                minhr=minhr>mid?mid : minhr;
+                r=mid-1;
+            }
+
+        }
+        return minhr;
+    }
+}
